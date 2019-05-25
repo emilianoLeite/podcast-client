@@ -1,4 +1,7 @@
 import React from 'react';
+import * as rssParser from 'react-native-rss-parser';
+import RSSItem from '../components/RSSItem';
+
 import {
   Image,
   Platform,
@@ -7,6 +10,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -17,10 +21,28 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { rss: {title: 'The bike shed', items: [{title: 'first podcast', id: 1}, {title: 'second podcast', id: 2}]} };
+    this._rssItems = this._rssItems.bind(this);
+  }
+
+  componentDidMount() {
+    return fetch('https://rss.simplecast.com/podcasts/282/rss')
+      .then((response) => response.text())
+      .then((responseData) => rssParser.parse(responseData))
+      .then((rss) => {
+        this.setState({rss});
+      }).catch(console.error);
+  }
+
   render() {
     return (
       <View style={styles.container}>
+
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
+
           <View style={styles.welcomeContainer}>
             <Image
               source={
@@ -40,11 +62,12 @@ export default class HomeScreen extends React.Component {
             <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
               <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
             </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
           </View>
+
+          <View>
+            {this._rssItems()}
+          </View>
+
 
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
@@ -62,6 +85,18 @@ export default class HomeScreen extends React.Component {
         </View>
       </View>
     );
+  }
+
+  _rssItems() {
+    if (this.state.rss) {
+      return (
+        <FlatList
+          data={this.state.rss.items}
+          keyExtractor={({id}) => `${id}`}
+          renderItem={({ item }) => <RSSItem item={item}/> }
+        />
+      );
+    }
   }
 
   _maybeRenderDevelopmentModeWarning() {
