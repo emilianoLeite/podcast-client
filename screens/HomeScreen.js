@@ -76,7 +76,7 @@ export default class HomeScreen extends React.Component {
     if (this.state.rss) {
       return (
         <FlatList
-          data={this.state.rss.items}
+          data={this.state.rss.items.slice(0,5)}
           keyExtractor={({id}) => `${id}`}
           renderItem={({ item }) => <RSSItem item={item}/> }
         />
