@@ -1,9 +1,22 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
-export default ({ item }) => {
+const styles = StyleSheet.create({
+  rssItem: {
+    backgroundColor: '#EEEEEE',
+    borderColor: "black",
+    borderWidth: 1,
+    padding: 4,
+  }
+});
+
+export default function RSSItem({ item }) {
   return (
-    <View style={{ backgroundColor: 'red' }}>
+    <View style={styles.rssItem}>
       <Text>
         {item.title}
       </Text>

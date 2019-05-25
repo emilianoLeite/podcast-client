@@ -1,5 +1,5 @@
 import React from 'react';
-import * as rssParser from 'react-native-rss-parser';
+import { parse } from 'react-native-rss-parser';
 import RSSItem from '../components/RSSItem';
 
 import {
@@ -23,26 +23,22 @@ export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { rss: {title: 'The bike shed', items: [{title: 'first podcast', id: 1}, {title: 'second podcast', id: 2}]} };
+    this.state = {}
     this._rssItems = this._rssItems.bind(this);
   }
 
   componentDidMount() {
     return fetch('https://rss.simplecast.com/podcasts/282/rss')
       .then((response) => response.text())
-      .then((responseData) => rssParser.parse(responseData))
-      .then((rss) => {
-        this.setState({rss});
-      }).catch(console.error);
+      .then(parse)
+      .then((rss) => this.setState({rss}))
+      .catch(console.error);
   }
 
   render() {
     return (
       <View style={styles.container}>
-
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
-
           <View style={styles.welcomeContainer}>
             <Image
               source={
@@ -64,10 +60,7 @@ export default class HomeScreen extends React.Component {
             </View>
           </View>
 
-          <View>
-            {this._rssItems()}
-          </View>
-
+          {this._rssItems()}
 
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
@@ -75,14 +68,6 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
     );
   }
@@ -96,6 +81,8 @@ export default class HomeScreen extends React.Component {
           renderItem={({ item }) => <RSSItem item={item}/> }
         />
       );
+    } else {
+      <Text> Loading...</Text>
     }
   }
 
