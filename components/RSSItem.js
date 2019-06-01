@@ -14,12 +14,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function RSSItem({ item }) {
+export default function RSSItem({ item, navigation }) {
+  function handleOnPress() {
+    navigation.navigate('PodcastShow');
+  };
+
   return (
     <View style={styles.rssItem}>
-      <Text>
+      <Text onPress={() => handleOnPress()}>
         {item.title}
       </Text>
     </View>
-  )
+  );
 }
