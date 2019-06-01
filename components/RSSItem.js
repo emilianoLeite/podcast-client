@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 export default function RSSItem({ item, navigation }) {
   function handleOnPress() {
-    navigation.navigate('PodcastShow');
+    navigation.navigate('PodcastShow', { ...item });
   };
 
   return (
