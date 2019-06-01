@@ -1,12 +1,22 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default function PodcastShowScreen() {
+export default function PodcastShowScreen(props) {
+  const item = props.navigation.state.params;
+
   return (
-    <View>
-      <Text>
-        PodcastShowScreen
-      </Text>
-    </View>
+    <ScrollView>
+      <View>
+        <Text>
+          {item.title}
+        </Text>
+      </View>
+      <View>
+        <Text>
+          {item.description}
+        </Text>
+      </View>
+    </ScrollView>
   )
 }
