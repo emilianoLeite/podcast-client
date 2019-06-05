@@ -21,7 +21,7 @@ export default function RSSItem({ item, navigation }) {
 
   return (
     <View style={styles.rssItem}>
-      <Text onPress={() => handleOnPress()}>
+      <Text onPress={handleOnPress}>
         {item.title}
       </Text>
     </View>

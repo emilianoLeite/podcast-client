@@ -14,6 +14,9 @@ const HomeStack = createStackNavigator({
   },
   PodcastShow: {
     screen: PodcastShowScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   }
 });
 
