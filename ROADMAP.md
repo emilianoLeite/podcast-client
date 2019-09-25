@@ -2,14 +2,14 @@
 
 ## MVP
 
--[ ] Download a file
+- [ ] Download a file
 
--[ ] Playback a local file
+- [ ] Playback a local file
 
--[ ] Stream an episode
+- [] Stream an episode
 
--[ ] Save podcasts by inputing rss
+- [ ] Save podcasts by inputing rss
 
--[ ] Playback control from notification
+- [ ] Playback control from notification
 
--[ ] Compose and rearranje reproduction playlist
+-[] Compose and rearranje reproduction playlist
