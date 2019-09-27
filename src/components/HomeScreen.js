@@ -1,5 +1,9 @@
 import React from 'react';
 import { parse } from 'react-native-rss-parser';
+const Sound = require('react-native-sound');
+const RNFS = require("react-native-fs");
+
+Sound.setCategory('Playback');
 
 import {
   ScrollView,
@@ -74,24 +78,16 @@ export default class HomeScreen extends React.Component {
 
           {this._rssItems()}
 
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
       </View>
     );
   }
 
   _rssItems() {
-    console.warn(this.state.rss)
     if (this.state.rss) {
-      return (
-        <RSSItem item={this.state.rss.items[0]} />
-      )
+      return <RSSItem item={this.state.rss.items[0]} />;
     } else {
-      <Text> Loading...</Text>
+      return <Text> Loading...</Text>;
     }
   }
 }
@@ -105,13 +101,53 @@ const rssStyles = StyleSheet.create({
   }
 });
 
-function RSSItem({ item, navigation }) {
+function RSSItem({ item }) {
   return (
     <View style={rssStyles.rssItem}>
-      <Text >
-        {item.title}
-      </Text>
-      <Button title={"Download"} />
+      <Text>{item.title}</Text>
+      <Button
+        title={"Download"}
+        onPress={() => {
+          const enclosure = item.enclosures[0];
+
+          var path = `${RNFS.DocumentDirectoryPath}podcast_name.mp3`;
+          console.warn(path);
+
+          RNFS.downloadFile({
+            fromUrl: enclosure.url,
+            toFile: path,
+          }).promise.then((success) => {
+            console.warn('FILE WRITTEN!');
+
+            let whoosh = new Sound(path, Sound.MAIN_BUNDLE, (error) => {
+              console.warn('entrou');
+
+              if (error) {
+                console.warn('failed to load the sound', error);
+                return;
+              }
+              // loaded successfully
+              console.warn(
+                'duration in seconds: ' +
+                  whoosh.getDuration() +
+                  'number of channels: ' +
+                  whoosh.getNumberOfChannels(),
+              );
+
+              // Play the sound with an onEnd callback
+              whoosh.play((success) => {
+                if (success) {
+                  console.warn('successfully finished playing');
+                } else {
+                  console.warn('playback failed due to audio decoding errors');
+                }
+              });
+            });
+
+            console.warn(Object.keys(item));
+          });
+        }}
+      />
     </View>
   );
 }
