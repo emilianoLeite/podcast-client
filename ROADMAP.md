@@ -17,3 +17,6 @@
 - [ ] Playback control from notification
 
 - [ ] Compose and rearranje reproduction playlist
+
+- [ ] Jump 10 seconds foward; Jump 10 seconds backwards
+  - This is necessary because we are not saving episode progress yet
