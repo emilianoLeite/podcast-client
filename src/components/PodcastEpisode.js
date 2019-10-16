@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { PlaybackControl } from "./PlaybackControl";
 
 const RNFS = require("react-native-fs");
 const Sound = require('react-native-sound');
@@ -22,6 +23,22 @@ const rssStyles = StyleSheet.create({
 });
 
 export function PodcastEpisode({ item }) {
+  const [episode, setEpisode] = React.useState();
+  const [playing, setPlaying] = React.useState(false);
+  const [fileLoaded, setFileLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    var path = `${RNFS.DocumentDirectoryPath}podcast_name.mp3`;
+
+    setEpisode(new Sound(path, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.warn('failed to load the sound', error);
+      } else {
+        setFileLoaded(true);
+      }
+    }))
+  }, [])
+
   return (
     <View style={rssStyles.rssItem}>
       <Text>{item.title}</Text>
@@ -69,29 +86,12 @@ export function PodcastEpisode({ item }) {
         }}
       />
 
+      {/* Move this button to PlaybackControl */}
       <Button
         title={"Play"}
         onPress={() => {
-          var path = `${RNFS.DocumentDirectoryPath}podcast_name.mp3`;
-
-          console.warn('FILE WRITTEN!');
-
-          let episode = new Sound(path, Sound.MAIN_BUNDLE, (error) => {
-            console.warn('entrou');
-
-            if (error) {
-              console.warn('failed to load the sound', error);
-              return;
-            }
-            // loaded successfully
-            console.warn(
-              'duration in seconds: ' +
-              episode.getDuration() +
-              'number of channels: ' +
-              episode.getNumberOfChannels(),
-            );
-
-            // Play the sound with an onEnd callback
+          if (fileLoaded) {
+            setPlaying(true);
             episode.play((success) => {
               if (success) {
                 console.warn('successfully finished playing');
@@ -99,9 +99,12 @@ export function PodcastEpisode({ item }) {
                 console.warn('playback failed due to audio decoding errors');
               }
             });
-          });
+          } else {
+            // waitForLoadAndPlay();
+          }
         }}
       />
+      {playing && <PlaybackControl episode={episode}/>}
     </View>
   );
 }
