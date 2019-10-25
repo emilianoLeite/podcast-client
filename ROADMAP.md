@@ -10,7 +10,7 @@
 
 - [X] Playback a local file
 
-- [ ] Playback control
+- [X] Playback control
 
 - [ ] Stream an episode
 
