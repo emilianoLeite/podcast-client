@@ -17,8 +17,8 @@ const rssStyles = StyleSheet.create({
 export function PlaybackControl({ episode }) {
   return (
     <View style={rssStyles.rssItem}>
-      <Button title="Pause" onPress={() => episode.pause(() => {console.warn("pausou");
-      })} />
+      {/* Não retire a arrow function */}
+      <Button title="Pause" onPress={() => { episode.pause() }} />
     </View>
   );
 }
