@@ -54,22 +54,13 @@ export function PodcastEpisode({ item }) {
             fromUrl: enclosure.url,
             toFile: path,
           }).promise.then((success) => {
-            console.warn('FILE WRITTEN!');
 
             let episode = new Sound(path, Sound.MAIN_BUNDLE, (error) => {
-              console.warn('entrou');
 
               if (error) {
                 console.warn('failed to load the sound', error);
                 return;
               }
-              // loaded successfully
-              console.warn(
-                'duration in seconds: ' +
-                episode.getDuration() +
-                'number of channels: ' +
-                episode.getNumberOfChannels(),
-              );
 
               // Play the sound with an onEnd callback
               episode.play((success) => {
