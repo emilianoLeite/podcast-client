@@ -63,12 +63,6 @@ export default class HomeScreen extends React.Component {
       .then(parse)
       .then((rss) => this.setState({ rss }))
       .catch(console.error);
-    // var path = `${RNFS.DocumentDirectoryPath}podcast_name.mp3`;
-    // RNFS.stat(path).then((statResult) => {
-    //   if (statResult.isFile()) {
-    //     this.setState({ displayControls: true })
-    //   }
-    // });
   }
   render() {
     return (
