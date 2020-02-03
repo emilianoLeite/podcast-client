@@ -1,0 +1,39 @@
+App does not build anymore:
+
+
+error Failed to install the app. Make sure you have the Android development environment set up: https://facebook.github.io/react-native/docs/getting-started.html#android-development-environment. Run CLI with --verbose flag for more details.
+Error: Command failed: ./gradlew app:installDebug -PreactNativeDevServerPort=8081
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not determine the dependencies of task ':app:processDebugResources'.
+> Could not resolve all task dependencies for configuration ':app:_internal_aapt2_binary'.
+   > Could not resolve com.android.tools.build:aapt2:3.4.2-5326820.
+     Required by:
+         project :app
+      > Could not resolve com.android.tools.build:aapt2:3.4.2-5326820.
+         > Could not get resource 'https://dl.google.com/dl/android/maven2/com/android/tools/build/aapt2/3.4.2-5326820/aapt2-3.4.2-5326820.pom'.
+            > Could not GET 'https://dl.google.com/dl/android/maven2/com/android/tools/build/aapt2/3.4.2-5326820/aapt2-3.4.2-5326820.pom'.
+               > sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+      > Could not resolve com.android.tools.build:aapt2:3.4.2-5326820.
+         > Could not get resource 'https://jcenter.bintray.com/com/android/tools/build/aapt2/3.4.2-5326820/aapt2-3.4.2-5326820.pom'.
+            > Could not GET 'https://repo.jfrog.org/artifactory/libs-release-bintray/com/android/tools/build/aapt2/3.4.2-5326820/aapt2-3.4.2-5326820.pom?referrer'.
+               > sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 12s
+
+    at checkExecSyncError (child_process.js:611:11)
+    at execFileSync (child_process.js:629:15)
+    at runOnAllDevices (/Users/emiliano.leite/Projects/podcast-client/node_modules/@react-native-community/cli-platform-android/build/commands/runAndroid/runOnAllDevices.js:74:39)
+    at buildAndRun (/Users/emiliano.leite/Projects/podcast-client/node_modules/@react-native-community/cli-platform-android/build/commands/runAndroid/index.js:158:41)
+    at /Users/emiliano.leite/Projects/podcast-client/node_modules/@react-native-community/cli-platform-android/build/commands/runAndroid/index.js:125:12
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Command.handleAction (/Users/emiliano.leite/Projects/podcast-client/node_modules/@react-native-community/cli/build/cliEntry.js:160:7)
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
