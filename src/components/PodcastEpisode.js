@@ -1,24 +1,19 @@
 import React from "react";
 
-import {
-  StyleSheet,
-  Button,
-  Text,
-  View,
-} from 'react-native';
+import { StyleSheet, Button, Text, View } from "react-native";
 import { PlaybackControl } from "./PlaybackControl";
 
 const RNFS = require("react-native-fs");
-const Sound = require('react-native-sound');
+const Sound = require("react-native-sound");
 
-Sound.setCategory('Playback');
+Sound.setCategory("Playback");
 
 const rssStyles = StyleSheet.create({
   rssItem: {
-    backgroundColor: '#EEEEEE',
+    backgroundColor: "#EEEEEE",
     borderColor: "black",
     borderWidth: 1,
-    padding: 4,
+    padding: 4
   }
 });
 
@@ -30,14 +25,16 @@ export function PodcastEpisode({ item }) {
   React.useEffect(() => {
     var path = `${RNFS.DocumentDirectoryPath}podcast_name.mp3`;
 
-    setEpisode(new Sound(path, Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        console.warn('failed to load the sound', error);
-      } else {
-        setFileLoaded(true);
-      }
-    }))
-  }, [])
+    setEpisode(
+      new Sound(path, Sound.MAIN_BUNDLE, error => {
+        if (error) {
+          console.warn("failed to load the sound", error);
+        } else {
+          setFileLoaded(true);
+        }
+      })
+    );
+  }, []);
 
   return (
     <View style={rssStyles.rssItem}>
@@ -47,27 +44,25 @@ export function PodcastEpisode({ item }) {
         onPress={() => {
           const enclosure = item.enclosures[0];
 
-          var path = `${RNFS.DocumentDirectoryPath}podcast_name.mp3`;
+          var path = `${RNFS.DocumentDirectoryPath}/podcast_name.mp3`;
           console.warn(path);
 
           RNFS.downloadFile({
             fromUrl: enclosure.url,
-            toFile: path,
-          }).promise.then((success) => {
-
-            let episode = new Sound(path, Sound.MAIN_BUNDLE, (error) => {
-
+            toFile: path
+          }).promise.then(success => {
+            let episode = new Sound(path, Sound.MAIN_BUNDLE, error => {
               if (error) {
-                console.warn('failed to load the sound', error);
+                console.warn("failed to load the sound", error);
                 return;
               }
 
               // Play the sound with an onEnd callback
-              episode.play((success) => {
+              episode.play(success => {
                 if (success) {
-                  console.warn('successfully finished playing');
+                  console.warn("successfully finished playing");
                 } else {
-                  console.warn('playback failed due to audio decoding errors');
+                  console.warn("playback failed due to audio decoding errors");
                 }
               });
             });
@@ -83,11 +78,11 @@ export function PodcastEpisode({ item }) {
         onPress={() => {
           if (fileLoaded) {
             setPlaying(true);
-            episode.play((success) => {
+            episode.play(success => {
               if (success) {
-                console.warn('successfully finished playing');
+                console.warn("successfully finished playing");
               } else {
-                console.warn('playback failed due to audio decoding errors');
+                console.warn("playback failed due to audio decoding errors");
               }
             });
           } else {
@@ -95,7 +90,7 @@ export function PodcastEpisode({ item }) {
           }
         }}
       />
-      {playing && <PlaybackControl episode={episode}/>}
+      {playing && <PlaybackControl episode={episode} />}
     </View>
   );
 }
