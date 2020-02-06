@@ -15,7 +15,11 @@
 
 - [x] Save podcasts by inputing rss
 
-- [ ] List saved podcasts
+- [x] List saved podcasts
+
+- [ ] Fix error that occurs when adding a podcast for the first time (`ENT No such file`)
+
+  - (but the podcast is persisted anyways)
 
 - [ ] Stream an episode
 

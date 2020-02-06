@@ -1,3 +1,6 @@
+import PodcastFactory from "../Domain/Factories/PodcastFactory";
+import { fromStorage } from "../Application/mappers/podcast";
+
 const RNFS = require("react-native-fs");
 
 const ROOT_PATH = `${RNFS.DocumentDirectoryPath}/`;
@@ -7,13 +10,17 @@ function readIndex() {
   return RNFS.readFile(INDEX_PATH, "utf8");
 }
 
-function allPodcasts() {
-  return readIndex.then(() => {
-    /*....*/
-  });
+async function allPodcasts() {
+  const parsedIndex = await readIndex();
+
+  return JSON.parse(parsedIndex)
+    .map(fromStorage)
+    .map(PodcastFactory.create);
 }
 
 function saveToDisk(podcastEntity) {
+  // TODO: Enteder pq isso sempre dá throw quando adicionando
+  // um podcast novo
   const path = `${
     RNFS.DocumentDirectoryPath
   }/podcasts/${podcastEntity.getIdentifier()}.json`;
@@ -34,7 +41,7 @@ function saveToIndex(podcast) {
 }
 
 function handleErrors(error, podcast) {
-  if (isFileNotExistError(error)) {
+  if (isFileNotExistError(error))˛ {
     RNFS.writeFile(INDEX_PATH, JSON.stringify([podcast]), "utf8");
     console.warn("CRIEI");
   } else {
@@ -63,5 +70,6 @@ export const PodcastRepository = {
   addPodcast(podcast) {
     saveToDisk(podcast);
     saveToIndex(podcast);
-  }
+  },
+  allPodcasts
 };
