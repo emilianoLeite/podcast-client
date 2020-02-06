@@ -1,14 +1,9 @@
 export class Podcast {
   constructor(podcast) {
-    this.identifier = podcast.title;
-    this.contents = podcast.contents;
+    this.identifier = podcast.identifier;
   }
 
   getIdentifier() {
     return this.identifier;
-  }
-
-  getContents() {
-    return this.contents;
   }
 }

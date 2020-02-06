@@ -6,6 +6,7 @@ import { PodcastEpisode } from "./PodcastEpisode";
 
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PodcastInput from "./PodcastInput";
+import PodcastList from "./PodcastList";
 import { PodcastRepository } from "../Repository/Podcast";
 
 const styles = StyleSheet.create({
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { podcasts: [] };
     // this.state = { displayControls: false }
     this._rssItems = this._rssItems.bind(this);
   }
@@ -61,6 +62,12 @@ export default class HomeScreen extends React.Component {
       .then(parse)
       .then(rss => this.setState({ rss }))
       .catch(console.error);
+    await this.getPodcasts();
+  }
+
+  async getPodcasts() {
+    const podcasts = await PodcastRepository.allPodcasts();
+    this.setState({ podcasts });
   }
 
   render() {
@@ -76,6 +83,7 @@ export default class HomeScreen extends React.Component {
           {this._rssItems()}
           {this.state.displayControls ? <PlaybackControl /> : <View />}
           <PodcastInput></PodcastInput>
+          <PodcastList podcasts={this.state.podcasts}></PodcastList>
         </ScrollView>
       </View>
     );
