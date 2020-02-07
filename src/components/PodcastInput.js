@@ -30,7 +30,6 @@ function savePodcast(url) {
 
 export default function PodcastInput() {
   const [value, setValue] = React.useState("");
-  const [fileText, setFileText] = React.useState("");
 
   return (
     <View style={styles.container}>
@@ -40,8 +39,7 @@ export default function PodcastInput() {
         onChangeText={setValue}
         value={value}
         onSubmitEditing={() => savePodcast(value)}
-      ></TextInput>
-      <Text>{fileText}</Text>
+      />
     </View>
   );
 }
