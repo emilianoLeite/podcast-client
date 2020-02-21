@@ -41,7 +41,7 @@ function saveToIndex(podcast) {
 }
 
 function handleErrors(error, podcast) {
-  if (isFileNotExistError(error))˛ {
+  if (isFileNotExistError(error)) {
     RNFS.writeFile(INDEX_PATH, JSON.stringify([podcast]), "utf8");
     console.warn("CRIEI");
   } else {
