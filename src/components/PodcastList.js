@@ -16,7 +16,6 @@ export class PodcastList extends Component {
             <Text key={podcast.getIdentifier()}>{podcast.getIdentifier()}</Text>
           );
         })}
-        <Text> textInComponent </Text>
       </View>
     );
   }
