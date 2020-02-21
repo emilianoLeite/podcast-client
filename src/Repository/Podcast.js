@@ -38,7 +38,7 @@ function handleErrors(error, podcast) {
     RNFS.writeFile(INDEX_PATH, JSON.stringify([podcast]), "utf8");
     console.warn("CRIEI");
   } else {
-    throw x;
+    throw error;
   }
 }
 
