@@ -6,6 +6,7 @@ const INDEX_PATH = `${ROOT_PATH}index.json`;
 function readIndex() {
   return RNFS.readFile(INDEX_PATH, "utf8");
 }
+
 function allPodcasts() {
   return readIndex.then(() => {
     /*....*/
