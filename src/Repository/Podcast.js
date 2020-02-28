@@ -10,12 +10,14 @@ function readIndex() {
   return RNFS.readFile(INDEX_PATH, "utf8");
 }
 
-async function allPodcasts() {
-  const parsedIndex = await readIndex();
-
-  return JSON.parse(parsedIndex)
-    .map(fromStorage)
-    .map(PodcastFactory.create);
+function allPodcasts() {
+  return readIndex()
+    .then(parsedIndex => {
+      return JSON.parse(parsedIndex)
+        .map(fromStorage)
+        .map(PodcastFactory.create);
+    })
+    .catch(() => []);
 }
 
 function saveToDisk(podcastEntity) {
