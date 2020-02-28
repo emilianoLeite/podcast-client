@@ -27,7 +27,10 @@
 
 - [X] Render podcast title instead of identifier
 
-- [ ] Stream an episode
+- [ ] Stream an episode na mão
+  - Tempo máximo de duração 3 sessões
+
+- [ ] Stream an episode using react-native-track-player
 
 - [ ] Playback control from notification
 
