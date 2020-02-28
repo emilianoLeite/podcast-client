@@ -3,7 +3,8 @@ import { parse } from "react-native-rss-parser";
 
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { PodcastRepository } from "../Repository/Podcast";
-import { Podcast } from "../Domain/Entities/Podcast";
+import { fromRss } from "../Application/mappers/podcast";
+import PodcastFactory from "../Domain/Factories/PodcastFactory";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,8 +20,9 @@ function savePodcast(url) {
   fetch(url)
     .then(response => response.text())
     .then(parse)
-    .then(parsed => {
-      PodcastRepository.addPodcast(new Podcast(parsed));
+    .then(fromRss)
+    .then(mapped => {
+      PodcastRepository.addPodcast(PodcastFactory.create(mapped));
     })
     .then(() => {
       console.warn("DEU BOM");
@@ -30,7 +32,6 @@ function savePodcast(url) {
 
 export default function PodcastInput() {
   const [value, setValue] = React.useState("");
-  const [fileText, setFileText] = React.useState("");
 
   return (
     <View style={styles.container}>
@@ -41,7 +42,6 @@ export default function PodcastInput() {
         value={value}
         onSubmitEditing={() => savePodcast(value)}
       ></TextInput>
-      <Text>{fileText}</Text>
     </View>
   );
 }
