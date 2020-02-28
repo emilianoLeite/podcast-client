@@ -19,9 +19,13 @@
 
 - [X] Fix index read attempt upon first installation
 
-- [ ] Investigate if files are actually being persited to Disk
+- [X] Investigate if files are actually being persited to Disk
   - _Everytime_ that we try to save a podcast, the RNFS.writeFile throws an `ENOENT: open failed: ENOENT (No such file or directory), open '/data/user/0/com.podcast_client/files/podcasts/...` error
   - (but the podcast is correctly saved on index)
+  - **Solution**: we were trying to create a file in a folder that did not yet existed
+  - **Solution2**: we deleted Repository#saveToDisk because we do not remember its purpose
+
+- [ ] Render podcast title instead of identifier
 
 - [ ] Stream an episode
 
