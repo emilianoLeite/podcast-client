@@ -25,7 +25,7 @@
   - **Solution**: we were trying to create a file in a folder that did not yet existed
   - **Solution2**: we deleted Repository#saveToDisk because we do not remember its purpose
 
-- [ ] Render podcast title instead of identifier
+- [X] Render podcast title instead of identifier
 
 - [ ] Stream an episode
 
