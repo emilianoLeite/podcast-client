@@ -13,7 +13,7 @@ export class PodcastList extends Component {
           console.warn(`listing podcasts`, this.props.podcasts);
 
           return (
-            <Text key={podcast.getIdentifier()}>{podcast.getIdentifier()}</Text>
+            <Text key={podcast.getIdentifier()}>{podcast.getTitle()}</Text>
           );
         })}
       </View>
