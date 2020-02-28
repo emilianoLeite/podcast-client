@@ -8,6 +8,7 @@ export class Podcast {
   getIdentifier() {
     return this.identifier;
   }
+
   getTitle() {
     return this.title;
   }
