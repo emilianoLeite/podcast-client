@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import { StyleSheet, Button, Text, View } from "react-native";
 import { PlaybackControl } from "./PlaybackControl";
 
@@ -17,7 +17,7 @@ const rssStyles = StyleSheet.create({
   }
 });
 
-export function PodcastEpisode({ item }) {
+const PodcastEpisode = ({ item }) => {
   const [episode, setEpisode] = React.useState();
   const [playing, setPlaying] = React.useState(false);
   const [fileLoaded, setFileLoaded] = React.useState(false);
@@ -50,7 +50,8 @@ export function PodcastEpisode({ item }) {
           RNFS.downloadFile({
             fromUrl: enclosure.url,
             toFile: path
-          }).promise.then(success => {
+            // eslint-disable-next-line no-unused-vars
+          }).promise.then(_downloadResult => {
             let episode = new Sound(path, Sound.MAIN_BUNDLE, error => {
               if (error) {
                 console.warn("failed to load the sound", error);
@@ -93,4 +94,13 @@ export function PodcastEpisode({ item }) {
       {playing && <PlaybackControl episode={episode} />}
     </View>
   );
-}
+};
+
+PodcastEpisode.propTypes = {
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    enclosures: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string }))
+  })
+};
+
+export { PodcastEpisode };
